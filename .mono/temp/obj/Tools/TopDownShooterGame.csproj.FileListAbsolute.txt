@@ -1,0 +1,5 @@
+C:\Users\Farmer\Documents\Godot Projects\TopDownShooterGame\.mono\temp\bin\Tools\TopDownShooterGame.dll
+C:\Users\Farmer\Documents\Godot Projects\TopDownShooterGame\.mono\temp\bin\Tools\TopDownShooterGame.pdb
+C:\Users\Farmer\Documents\Godot Projects\TopDownShooterGame\.mono\temp\obj\Tools\TopDownShooterGame.csprojAssemblyReference.cache
+C:\Users\Farmer\Documents\Godot Projects\TopDownShooterGame\.mono\temp\obj\Tools\TopDownShooterGame.dll
+C:\Users\Farmer\Documents\Godot Projects\TopDownShooterGame\.mono\temp\obj\Tools\TopDownShooterGame.pdb
