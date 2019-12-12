@@ -1,0 +1,5 @@
+- Give player inventory
+	- DONE put Inventory scene inside Envrionment scene
+	- when player collides with crate, take gun from create, and put in inventory
+	- when player clicks on cell in inventory, equip that gun (i.e. set player.gun variable)
+		- put old gun in slot

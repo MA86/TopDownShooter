@@ -17,9 +17,15 @@ public class EnvironNode2D : Node2D
 
         foreach (var zombie in this.Zombies)
             zombie.TargetNode = this.Player;
+
+        // Listen to inventory click event.
+        PlayerBag.Connect("CellClicked", this, "OnCellClicked");
     }
 
-
+    private void OnCellClicked(CellGui cellClicked)
+    {
+        Player.EquipGun(cellClicked.gun);
+    }
     // Called every frame
     public override void _Process(float delta)
     {

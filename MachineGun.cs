@@ -35,7 +35,7 @@ public class MachineGun : Gun
         reloadTimer.SetWaitTime(ReloadTime);
         reloadTimer.OneShot = true;
 
-        // default texture
+        // load machine gun texture.
         ImageTexture defaultTexture = new ImageTexture();
         defaultTexture.Load("res://topdown-shooter/PNG/weapon_gun.png");
         this.Texture = defaultTexture;
@@ -99,7 +99,8 @@ public class MachineGun : Gun
     // Reloads the gun. Does nothing if the gun is already reloading.
     public void Reload()
     {
-        if (reloadTimer.IsStopped()){
+        if (reloadTimer.IsStopped())
+        {
             reloadTimer.Start();
         }
     }

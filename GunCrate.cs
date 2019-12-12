@@ -5,8 +5,7 @@ public class GunCrate : RigidBody2D
 {
     // Fields
     [Export] PackedScene GunScene;
-
-    public Gun Gun;    // Crate has a gun.
+    public Gun Gun;
 
 
     // Called when the GunCrate enters the scene tree for the first time.

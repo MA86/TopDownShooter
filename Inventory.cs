@@ -17,7 +17,7 @@ public class Inventory : Panel
         cell1 = this.GetNode<CellGui>("Cell1");
         cell2 = this.GetNode<CellGui>("Cell2");
         cell3 = this.GetNode<CellGui>("Cell3");
-        
+
         // Listen to CellGui singnals being clicked
         cell1.Connect("CellClicked", this, "OnCellClicked");
         cell2.Connect("CellClicked", this, "OnCellClicked");
@@ -33,13 +33,11 @@ public class Inventory : Panel
     // Adds a Gun to the Inventory.
     public void AddGun(Gun gun)
     {
-        
-        
         // Do nothing if there are no empty cells in the inventory
         if (cell1.gun != null && cell2.gun != null && cell3.gun != null)
         {
             GD.Print("ERROR: AddGun() called when Inventory is already full.");
-            return; 
+            return;
         }
 
         if (cell1.gun == null)
