@@ -20,6 +20,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
     // Equip weapon.
     public void EquipGun(Gun gun)
     {
+        this.RemoveChild(this.gun);
         this.gun = gun as MachineGun;
         this.AddChild(this.gun);
     }
@@ -40,7 +41,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
             if (collisionInfo.Collider is GunCrate crate)
             {
                 // Add the gun in the inventory.
-                Inventory inventory = this.GetParent<EnvironNode2D>().GetNode<Inventory>("CanvasLayer/Inventory");
+                Inventory inventory = this.GetNode<Inventory>("/root/EnvironNode2D/CanvasLayer/Inventory");
                 inventory.AddGun(crate.Gun);
                 crate.QueueFree();
             }
@@ -61,6 +62,9 @@ public class PlayerKinematicBody2D : KinematicBody2D
             // pressed
             if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
             {
+                if(this.gun == null)
+                    return;
+                
                 this.gun.PullTrigger();
                 GetTree().SetInputAsHandled();
                 return;
@@ -69,6 +73,9 @@ public class PlayerKinematicBody2D : KinematicBody2D
             // released
             if ((!mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
             {
+                if (this.gun == null)
+                    return;
+
                 this.gun.ReleaseTrigger();
                 GetTree().SetInputAsHandled();
                 return;

@@ -9,10 +9,11 @@ public class EnvironNode2D : Node2D
     public PlayerKinematicBody2D Player;  // This reference is set by the players blueprint
     public Inventory PlayerBag;
 
+
     // Called when the EnvironNode2D enters the scene tree for the first time.
     public override void _Ready()
     {
-        Player = this.GetNode<PlayerKinematicBody2D>("PlayerKinematicBody2D");
+        Player = this.GetNode<PlayerKinematicBody2D>("OnGround/PlayerKinematicBody2D");
         PlayerBag = this.GetNode<Inventory>("CanvasLayer/Inventory");
 
         foreach (var zombie in this.Zombies)

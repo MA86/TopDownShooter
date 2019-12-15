@@ -54,6 +54,7 @@
     <Compile Include="EnvironNode2D.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="GunCrate.cs" />
+    <Compile Include="HealthKit.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="MachineGun.cs" />
     <Compile Include="PlayerKinematicBody2D.cs" />

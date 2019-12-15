@@ -1,5 +1,34 @@
-- Give player inventory
+- DONE Give player inventory
 	- DONE put Inventory scene inside Envrionment scene
-	- when player collides with crate, take gun from create, and put in inventory
-	- when player clicks on cell in inventory, equip that gun (i.e. set player.gun variable)
-		- put old gun in slot
+	- DONE when player collides with crate, take gun from create, and put in inventory
+	- DONE when player clicks on cell in inventory, equip that gun (i.e. set player.gun variable)
+- DONE walls
+	- DONE short (allows bullets to pass, but not characters)
+	- DONE tall (blocks both bullets and characters)
+- DONE bullet's must spawn at end of gun
+	- DONE give each gun a bullet spawn point that is settable
+- non gun items
+	- placeable mines
+	- first aid kits
+- placeable barrel
+	- can be shot to explode
+- placeable sandbags
+- sniper rifle
+- machine gun 
+- shotgun
+- pistol
+- chainsaw
+- generalize MachineGun (and rename to GenericGun), have it be able to be in semi auto mode
+
+- Sound/Animation/Polish
+	- DONE gun shot/reload sound
+	- better gun icons
+	- better inventory background (and cell background)
+	- background music
+	- inventory click sound
+	- change mouse to cross hair.
+	- make zoom user adjustable.
+	- etc
+
+- unstable mine (contineously generates lots of bullets in 90 degree arg)
+	- player can funnel by building "barrel" around it (just two long thin walls)

@@ -67,10 +67,12 @@ public class MachineGun : Gun
         bullet.Rotation = this.GlobalRotation;
         bullet.Rotation += (float)GD.RandRange(Mathf.Deg2Rad(-Theta), Mathf.Deg2Rad(Theta));
         bullet.Position = this.GlobalPosition;
+        bullet.Position = this.GetNode<Position2D>("Position2D").GlobalPosition;
         bullet.MaxDistance = this.Range;
 
         // Set off the bullet
         bullet.Go();
+        this.GetNode<AudioStreamPlayer2D>("BulletSound").Play();
 
         this.lastBulletTime = OS.GetTicksMsec();
     }
@@ -101,6 +103,7 @@ public class MachineGun : Gun
     {
         if (reloadTimer.IsStopped())
         {
+            this.GetNode<AudioStreamPlayer2D>("ReloadSound").Play();
             reloadTimer.Start();
         }
     }

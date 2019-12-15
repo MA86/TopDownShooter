@@ -3,11 +3,11 @@ using System;
 
 public class BulletRigidBody2D : RigidBody2D
 {
-    public float Speed = 1400;
-    public float Size = 10;
-    public float Life = 1;
-    public float Damage = 10;
-    public float MaxDistance = 500;
+    [Export] public float Speed = 800;
+    [Export] public float Size = 10;
+    [Export] public float Life = 1;
+    [Export] public float Damage = 10;
+    [Export] public float MaxDistance = 500;
 
     Vector2 startPosition;
     Timer bulletTimer;

@@ -14,7 +14,7 @@ public class ZombieKinematicBody2D : KinematicBody2D
     public override void _Ready()
     {
         // Add the zombie to the collection, and have it target the player
-        EnvironNode2D env = GetParent<EnvironNode2D>();
+        EnvironNode2D env = this.GetNode<EnvironNode2D>("/root/EnvironNode2D");
         env.Zombies.Add(this);
 
         // Play the idle zombie animation
