@@ -8,17 +8,15 @@
 - DONE bullet's must spawn at end of gun
 	- DONE give each gun a bullet spawn point that is settable
 - non gun items
-	- placeable mines
-	- first aid kits
-- placeable barrel
-	- can be shot to explode
-- placeable sandbags
-- sniper rifle
-- machine gun 
-- shotgun
+	- DONE placeable mines
+	- DONE first aid kits
+- DONE generalize MachineGun (and rename to GenericGun), have it be able to be in semi auto mode
+- DONE sniper rifle
+- DONE heavy machine gun
+- DONE machine gun 
+- DONE shotgun
 - pistol
 - chainsaw
-- generalize MachineGun (and rename to GenericGun), have it be able to be in semi auto mode
 
 - Sound/Animation/Polish
 	- DONE gun shot/reload sound
@@ -28,6 +26,9 @@
 	- inventory click sound
 	- change mouse to cross hair.
 	- make zoom user adjustable.
+	- add vibration to the gun.
+	- placeable barrel
+		- can be shot to explode
 	- etc
 
 - unstable mine (contineously generates lots of bullets in 90 degree arg)

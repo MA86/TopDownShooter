@@ -56,7 +56,8 @@
     <Compile Include="GunCrate.cs" />
     <Compile Include="HealthKit.cs" />
     <Compile Include="Inventory.cs" />
-    <Compile Include="MachineGun.cs" />
+    <Compile Include="GenericGun.cs" />
+    <Compile Include="Mine.cs" />
     <Compile Include="PlayerKinematicBody2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ZombieKinematicBody2D.cs" />

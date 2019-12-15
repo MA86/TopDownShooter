@@ -29,9 +29,13 @@ mouse={
 
 [layer_names]
 
+2d_physics/layer_1="player"
 3d_physics/layer_1="player"
+2d_physics/layer_2="other"
 3d_physics/layer_2="other"
+2d_physics/layer_3="bullet"
 3d_physics/layer_3="bullet"
+2d_physics/layer_4="sandbags"
 3d_physics/layer_4="sandbags"
 
 [physics]

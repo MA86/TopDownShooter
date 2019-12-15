@@ -1,20 +1,40 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://MachineGun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GenericGun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sounds/heavy_mgun_reload.wav" type="AudioStream" id=2]
+[ext_resource path="res://topdown-shooter/PNG/weapon_machine.png" type="Texture" id=3]
+[ext_resource path="res://topdown-shooter/PNG/weapon_gun.png" type="Texture" id=4]
 
 [node name="Sprite" index="0" instance=ExtResource( 1 )]
-position = Vector2( 18.014, 11.1916 )
-scale = Vector2( 3.61847, 1.83275 )
-ClipSize = 1000
-ReloadTime = 15.0
+position = Vector2( 24.568, 6.62369 )
+scale = Vector2( 1.5, 0.561672 )
+ClipSize = 200
+ReloadTime = 6.0
 RateOfFire = 5000.0
-Theta = 10.0
-CurrentRounds = 1000
-Range = 900
+MaxTheta = 20.0
+CurrentRounds = 200
+Range = 700
 
 [node name="Position2D" parent="." index="0"]
-position = Vector2( 13.331, -0.496521 )
+position = Vector2( 14.2997, 6.57545 )
 
 [node name="ReloadSound" parent="." index="2"]
 stream = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="." index="3"]
+position = Vector2( 2.50175, 4.96516 )
+texture = ExtResource( 3 )
+
+[node name="Sprite4" type="Sprite" parent="." index="4"]
+position = Vector2( 0.667187, 15.6886 )
+rotation = 0.296919
+texture = ExtResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="." index="5"]
+position = Vector2( 0.127767, 12.156 )
+texture = ExtResource( 3 )
+
+[node name="Sprite3" type="Sprite" parent="." index="6"]
+position = Vector2( -7.28687, 5.08397 )
+scale = Vector2( 0.916377, 2.13152 )
+texture = ExtResource( 4 )

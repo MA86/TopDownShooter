@@ -3,7 +3,7 @@ using System;
 
 public class HealthKit : Area2D
 {
-    public int HealthPoints = 5;
+    [Export] public int HealthPoints = 5;
 
 
     public override void _Ready()
@@ -16,10 +16,7 @@ public class HealthKit : Area2D
     {
         if (body is PlayerKinematicBody2D player)
         {
-            player.Health += this.HealthPoints;
-            if (player.Health > 10)
-                player.Health = 10;
-
+            player.AddToHealth(this.HealthPoints);
             this.GetNode<AudioStreamPlayer2D>("/root/EnvironNode2D/HealthRegenSound").Play();
             this.QueueFree();
         }

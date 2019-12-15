@@ -9,7 +9,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
     [Export] public float DamageCaused = 0;
 
     Vector2 movementVector;
-    MachineGun gun;
+    GenericGun gun;
 
     // Called when this player enters the scene.
     public override void _Ready()
@@ -21,7 +21,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
     public void EquipGun(Gun gun)
     {
         this.RemoveChild(this.gun);
-        this.gun = gun as MachineGun;
+        this.gun = gun as GenericGun;
         this.AddChild(this.gun);
     }
 
@@ -131,5 +131,12 @@ public class PlayerKinematicBody2D : KinematicBody2D
 
             this.QueueFree();
         }
+    }
+
+    public void AddToHealth(int health)
+    {
+        this.Health += health;
+        if (this.Health > 10)
+            this.Health = 10;
     }
 }

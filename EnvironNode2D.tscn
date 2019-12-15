@@ -1,16 +1,19 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://EnvironNode2D.cs" type="Script" id=1]
 [ext_resource path="res://Inventory.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GunCrate.tscn" type="PackedScene" id=3]
-[ext_resource path="res://MachineGun.tscn" type="PackedScene" id=4]
-[ext_resource path="res://HeavyMGun.tscn" type="PackedScene" id=5]
-[ext_resource path="res://kenney_topdowntanksredux/autotile_tileset.png" type="Texture" id=6]
-[ext_resource path="res://kenney_topdowntanksredux/sand_bags.png" type="Texture" id=7]
-[ext_resource path="res://ZombieKinematicBody2D.tscn" type="PackedScene" id=8]
-[ext_resource path="res://PlayerKinematicBody2D.tscn" type="PackedScene" id=9]
-[ext_resource path="res://HealthKit.tscn" type="PackedScene" id=10]
-[ext_resource path="res://sounds/health_sound.wav" type="AudioStream" id=11]
+[ext_resource path="res://GenericGun.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Shotgun.tscn" type="PackedScene" id=5]
+[ext_resource path="res://HeavyMGun.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SniperRifle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://kenney_topdowntanksredux/autotile_tileset.png" type="Texture" id=8]
+[ext_resource path="res://kenney_topdowntanksredux/sand_bags.png" type="Texture" id=9]
+[ext_resource path="res://ZombieKinematicBody2D.tscn" type="PackedScene" id=10]
+[ext_resource path="res://PlayerKinematicBody2D.tscn" type="PackedScene" id=11]
+[ext_resource path="res://HealthKit.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Mine.tscn" type="PackedScene" id=13]
+[ext_resource path="res://sounds/health_sound.wav" type="AudioStream" id=14]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -179,7 +182,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
 [sub_resource type="TileSet" id=56]
 0/name = "autotile_tileset.png 0"
-0/texture = ExtResource( 6 )
+0/texture = ExtResource( 8 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 656, 434 )
@@ -554,7 +557,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=65]
 0/name = "sand_bags.png 0"
-0/texture = ExtResource( 7 )
+0/texture = ExtResource( 9 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 128, 96 )
@@ -633,12 +636,22 @@ script = ExtResource( 1 )
 [node name="OnGround" type="Node2D" parent="."]
 
 [node name="Crate" parent="OnGround" instance=ExtResource( 3 )]
-position = Vector2( 198.893, 569.668 )
+position = Vector2( 200.563, 569.668 )
 GunScene = ExtResource( 4 )
 
-[node name="Crate2" parent="OnGround" instance=ExtResource( 3 )]
-position = Vector2( 295.791, 578.477 )
+[node name="Crate4" parent="OnGround" instance=ExtResource( 3 )]
+position = Vector2( 93.6715, 633.135 )
 GunScene = ExtResource( 5 )
+
+[node name="Crate2" parent="OnGround" instance=ExtResource( 3 )]
+position = Vector2( 295.791, 580.147 )
+mass = 50.0
+GunScene = ExtResource( 6 )
+
+[node name="Crate3" parent="OnGround" instance=ExtResource( 3 )]
+position = Vector2( 329.195, 498.308 )
+mass = 50.0
+GunScene = ExtResource( 7 )
 
 [node name="Walls" type="TileMap" parent="OnGround"]
 tile_set = SubResource( 56 )
@@ -653,31 +666,52 @@ collision_mask = 11
 format = 1
 tile_data = PoolIntArray( 655363, 0, 0, 655364, 0, 1, 655365, 0, 3, 720901, 0, 65539, 786437, 0, 65539, 851973, 0, 65539, 917507, 0, 0, 917508, 0, 1, 917509, 0, 131075 )
 
-[node name="ZombieKinematicBody2D" parent="OnGround" instance=ExtResource( 8 )]
+[node name="ZombieKinematicBody2D" parent="OnGround" instance=ExtResource( 10 )]
 position = Vector2( 685.913, 321.895 )
 
-[node name="ZombieKinematicBody2D2" parent="OnGround" instance=ExtResource( 8 )]
+[node name="ZombieKinematicBody2D2" parent="OnGround" instance=ExtResource( 10 )]
 position = Vector2( 1001.23, 255.75 )
 
-[node name="ZombieKinematicBody2D3" parent="OnGround" instance=ExtResource( 8 )]
+[node name="ZombieKinematicBody2D3" parent="OnGround" instance=ExtResource( 10 )]
 position = Vector2( 726.439, 389.066 )
 
-[node name="ZombieKinematicBody2D4" parent="OnGround" instance=ExtResource( 8 )]
+[node name="ZombieKinematicBody2D4" parent="OnGround" instance=ExtResource( 10 )]
 position = Vector2( 778.133, 363.219 )
 
-[node name="ZombieKinematicBody2D5" parent="OnGround" instance=ExtResource( 8 )]
+[node name="ZombieKinematicBody2D5" parent="OnGround" instance=ExtResource( 10 )]
 position = Vector2( 848.872, 307.444 )
 
-[node name="PlayerKinematicBody2D" parent="OnGround" instance=ExtResource( 9 )]
+[node name="PlayerKinematicBody2D" parent="OnGround" instance=ExtResource( 11 )]
 position = Vector2( 113.801, 518.764 )
 collision_mask = 15
 
 [node name="Camera2D" type="Camera2D" parent="OnGround/PlayerKinematicBody2D"]
 current = true
 
-[node name="HealthKit" parent="OnGround" instance=ExtResource( 10 )]
+[node name="HealthKit" parent="OnGround" instance=ExtResource( 12 )]
+position = Vector2( 139, 96.5526 )
+HealthPoints = 3
+
+[node name="Mine" parent="OnGround" instance=ExtResource( 13 )]
+position = Vector2( -121.171, 749.866 )
+BlastRadius = 100.0
+
+[node name="Mine2" parent="OnGround" instance=ExtResource( 13 )]
+position = Vector2( -17.6201, 778.259 )
+BlastRadius = 200.0
+
+[node name="Mine3" parent="OnGround" instance=ExtResource( 13 )]
+position = Vector2( 92.612, 778.259 )
+NumberOfBulletsGenerated = 100
+
+[node name="Mine4" parent="OnGround" instance=ExtResource( 13 )]
+position = Vector2( 209.525, 781.599 )
+BlastRadius = 400.0
+
+[node name="Mine5" parent="OnGround" instance=ExtResource( 13 )]
+position = Vector2( 319.757, 776.589 )
 
 [node name="Sky" type="Node2D" parent="."]
 
 [node name="HealthRegenSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 11 )
+stream = ExtResource( 14 )

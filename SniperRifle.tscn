@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GenericGun.tscn" type="PackedScene" id=1]
+
+[node name="Sprite" instance=ExtResource( 1 )]
+position = Vector2( 30.9234, 8.21255 )
+scale = Vector2( 2.28239, 0.601394 )
+ClipSize = 5
+RateOfFire = 60.0
+MaxTheta = 3.0
+CurrentRounds = 5
+Range = 2000
+Auto = false
+BulletSpeed = 1600.0
