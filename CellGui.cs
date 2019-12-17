@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CellGui : TextureButton
+public class CellGui : Panel
 {
     [Signal] public delegate void CellClicked(CellGui cell);
 
@@ -10,7 +10,7 @@ public class CellGui : TextureButton
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        this.Connect("pressed", this, "OnButtonPressed");
+        this.GetNode<TextureButton>("TextureButton").Connect("pressed", this, "OnButtonPressed");
     }
 
     // Executed when the TextureButton is pressed.
@@ -22,6 +22,7 @@ public class CellGui : TextureButton
     public void SetGun(Gun gun)
     {
         this.gun = gun;
-        this.TextureNormal = gun.Texture;
+        this.GetNode<TextureButton>("TextureButton").TextureNormal = gun.Icon;
+            
     }
 }

@@ -1,27 +1,33 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Inventory : Panel
 {
     [Signal] public delegate void CellClicked(CellGui cell);
 
     // Fields
-    CellGui cell1;
-    CellGui cell2;
-    CellGui cell3;
+    [Export] public int NumCells = 10;
+
+    private List<CellGui> cells = new List<CellGui>();
+    private PackedScene cellGuiScene;
 
     // Called when the inventory enters the scene tree for the first time.
     public override void _Ready()
     {
-        // Instantiate CellGuis
-        cell1 = this.GetNode<CellGui>("Cell1");
-        cell2 = this.GetNode<CellGui>("Cell2");
-        cell3 = this.GetNode<CellGui>("Cell3");
+        cellGuiScene = GD.Load<PackedScene>("res://CellGui.tscn");
 
-        // Listen to CellGui singnals being clicked
-        cell1.Connect("CellClicked", this, "OnCellClicked");
-        cell2.Connect("CellClicked", this, "OnCellClicked");
-        cell3.Connect("CellClicked", this, "OnCellClicked");
+        for (int i = 0; i < this.NumCells; i++)
+        {
+            CellGui cell = (CellGui)cellGuiScene.Instance();
+            this.AddChild(cell);
+            cell.SetPosition(new Vector2(64 * i, 0));
+            cell.Connect("CellClicked", this, "OnCellClicked");
+            this.cells.Add(cell);
+        }
+
+        this.SetSize(new Vector2(64*NumCells, 64));
+
     }
 
     void OnCellClicked(CellGui cell)
@@ -33,24 +39,13 @@ public class Inventory : Panel
     // Adds a Gun to the Inventory.
     public void AddGun(Gun gun)
     {
-        // Do nothing if there are no empty cells in the inventory
-        if (cell1.gun != null && cell2.gun != null && cell3.gun != null)
+        foreach (CellGui cell in this.cells)
         {
-            GD.Print("ERROR: AddGun() called when Inventory is already full.");
-            return;
-        }
-
-        if (cell1.gun == null)
-        {
-            cell1.SetGun(gun);
-        }
-        else if (cell2.gun == null)
-        {
-            cell2.SetGun(gun);
-        }
-        else
-        {
-            cell3.SetGun(gun);
+            if (cell.gun == null)
+            {
+                cell.SetGun(gun);
+                break;
+            }
         }
     }
 }

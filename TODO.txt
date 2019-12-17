@@ -1,22 +1,7 @@
-- DONE Give player inventory
-	- DONE put Inventory scene inside Envrionment scene
-	- DONE when player collides with crate, take gun from create, and put in inventory
-	- DONE when player clicks on cell in inventory, equip that gun (i.e. set player.gun variable)
-- DONE walls
-	- DONE short (allows bullets to pass, but not characters)
-	- DONE tall (blocks both bullets and characters)
-- DONE bullet's must spawn at end of gun
-	- DONE give each gun a bullet spawn point that is settable
-- non gun items
-	- DONE placeable mines
-	- DONE first aid kits
-- DONE generalize MachineGun (and rename to GenericGun), have it be able to be in semi auto mode
-- DONE sniper rifle
-- DONE heavy machine gun
-- DONE machine gun 
-- DONE shotgun
-- pistol
+# Todo
+- corner
 - chainsaw
+- make health pickupable (use when clicked on)
 
 - Sound/Animation/Polish
 	- DONE gun shot/reload sound
@@ -33,3 +18,24 @@
 
 - unstable mine (contineously generates lots of bullets in 90 degree arg)
 	- player can funnel by building "barrel" around it (just two long thin walls)
+
+# === Done ===
+- DONE Give player inventory
+	- DONE put Inventory scene inside Envrionment scene
+	- DONE when player collides with crate, take gun from create, and put in inventory
+	- DONE when player clicks on cell in inventory, equip that gun (i.e. set player.gun variable)
+- DONE walls
+	- DONE short (allows bullets to pass, but not characters)
+	- DONE tall (blocks both bullets and characters)
+- DONE bullet's must spawn at end of gun
+	- DONE give each gun a bullet spawn point that is settable
+- DONE non gun items
+	- DONE placeable mines
+	- DONE first aid kits
+- DONE generalize MachineGun (and rename to GenericGun), have it be able to be in semi auto mode
+- DONE sniper rifle
+- DONE heavy machine gun
+- DONE machine gun 
+- DONE shotgun
+- DONE gun icons
+- DONE make inventory arbitrarely big

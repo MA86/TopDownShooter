@@ -1,23 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Inventory.cs" type="Script" id=1]
-[ext_resource path="res://CellGui.tscn" type="PackedScene" id=2]
 
 [node name="Panel" type="Panel"]
 margin_right = 204.0
 margin_bottom = 64.0
 script = ExtResource( 1 )
-
-[node name="Cell1" parent="." instance=ExtResource( 2 )]
-margin_right = 64.0
-margin_bottom = 64.0
-
-[node name="Cell2" parent="." instance=ExtResource( 2 )]
-margin_left = 140.0
-margin_right = 204.0
-margin_bottom = 64.0
-
-[node name="Cell3" parent="." instance=ExtResource( 2 )]
-margin_left = 70.0
-margin_right = 134.0
-margin_bottom = 64.0

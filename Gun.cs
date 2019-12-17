@@ -4,6 +4,7 @@ using System;
 // Gun inherits from Sprite, so all guns now have Texture property.
 public class Gun : Sprite
 {
+    [Export] public Texture Icon;
 
     public virtual void PullTrigger()
     {
