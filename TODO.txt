@@ -9,7 +9,7 @@
 	- better inventory background (and cell background)
 	- background music
 	- inventory click sound
-	- change mouse to cross hair.
+	- DONE change mouse to cross hair.
 	- make zoom user adjustable.
 	- add vibration to the gun.
 	- placeable barrel

@@ -21,6 +21,11 @@ public class EnvironNode2D : Node2D
 
         // Listen to inventory click event.
         PlayerBag.Connect("CellClicked", this, "OnCellClicked");
+
+        // Setup crosshair on the mouse icon.
+        Texture mouseImage = GD.Load<Texture>("res://kenney_topdowntanksredux/PNG/Retina/barricadeMetal.png");
+        Input.SetCustomMouseCursor(mouseImage, Input.CursorShape.Cross);
+        Input.SetDefaultCursorShape(Input.CursorShape.Cross);
     }
 
     private void OnCellClicked(CellGui cellClicked)
