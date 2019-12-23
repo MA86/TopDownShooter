@@ -3,11 +3,6 @@ using System;
 
 public class Barrel : Mine
 {
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-
-    }
 
     // Called when someone shoots the barrel.
     public override void OnBodyEntered(PhysicsBody2D body)
@@ -16,6 +11,7 @@ public class Barrel : Mine
         {
             this.SpawnBullet();
             this.QueueFree();
+            
         }
     }
 }
