@@ -15,13 +15,12 @@ public class GenericGun : Gun
     [Export] float BulletSpeed = 800;
     [Export] int NumBulletsPerShot = 1;         // Normally you'd want this to be 1, set it higher to create a "shotgun" like effect
     [Export] float StaggerDistance = 0;         // When bullets are spanwed, how much random forward movement they get (again, shotgun like effect)  
-
+    [Export] PackedScene BulletUsed;
 
     private Timer bulletTimer;
     private Timer reloadTimer;
     private Timer canShootTimer;
     private Timer accuracyTimer;
-    private PackedScene bulletResource;
     private float lastBulletTime = 0;
     private bool canShoot = true;
     private bool shooting = false;
@@ -32,7 +31,9 @@ public class GenericGun : Gun
     {
         this.immediateTheta = this.Theta;
 
-        bulletResource = GD.Load<PackedScene>("res://BulletRigidBody2D.tscn");
+        // by default, use this bullet
+        if (BulletUsed == null)
+            BulletUsed = GD.Load<PackedScene>("res://BulletRigidBody2D.tscn");
 
         // Initialize bullet timer.
         bulletTimer = new Timer();
@@ -72,6 +73,7 @@ public class GenericGun : Gun
             this.immediateTheta = this.immediateTheta / 2.0f;
         if (this.immediateTheta < this.Theta)
             this.immediateTheta = this.Theta;
+        this.Rotation = 0;
     }
 
     void OnCanShoot()
@@ -106,10 +108,11 @@ public class GenericGun : Gun
 
         for (int i = 0; i < this.NumBulletsPerShot; i++)
         {
-            BulletRigidBody2D bullet = (BulletRigidBody2D)bulletResource.Instance();
+            BulletRigidBody2D bullet = (BulletRigidBody2D)this.BulletUsed.Instance();
             this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(bullet);
+            this.Rotation = 0;
+            this.Rotation += (float)GD.RandRange(Mathf.Deg2Rad(-this.immediateTheta), Mathf.Deg2Rad(this.immediateTheta));
             bullet.Rotation = this.GlobalRotation;
-            bullet.Rotation += (float)GD.RandRange(Mathf.Deg2Rad(-this.immediateTheta), Mathf.Deg2Rad(this.immediateTheta));
             bullet.Position = this.GlobalPosition;
             bullet.Position = this.GetNode<Position2D>("Position2D").GlobalPosition;
             bullet.Position +=  bullet.GlobalTransform.x * (float)GD.RandRange(0, this.StaggerDistance);

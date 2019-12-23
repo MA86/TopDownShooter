@@ -49,6 +49,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Barrel.cs" />
     <Compile Include="BulletRigidBody2D.cs" />
     <Compile Include="CellGui.cs" />
     <Compile Include="EnvironNode2D.cs" />

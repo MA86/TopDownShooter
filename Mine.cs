@@ -14,8 +14,23 @@ public class Mine : Area2D
         this.Connect("body_entered", this, "OnBodyEntered");
     }
 
+    // Spawn abunch of bullets originating from the mine.
+    protected void SpawnBullet()
+    {
+        for (double i = 0; i < 360; i += (360.0 / this.NumberOfBulletsGenerated))
+        {
+            BulletRigidBody2D bullet = (BulletRigidBody2D)bulletScene.Instance();
+            this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(bullet);
+            bullet.GlobalPosition = this.GlobalPosition;
+            bullet.GlobalRotation = (float)i;
+            bullet.Speed = (float)GD.RandRange(400, 800);
+            bullet.MaxDistance = this.BlastRadius;
+            bullet.Go();
+        }
+    }
+
     // Called when someone steps over the mine.
-    private void OnBodyEntered(PhysicsBody2D body)
+    public virtual void OnBodyEntered(PhysicsBody2D body)
     {
         if ((body is ZombieKinematicBody2D zombie) || (body is PlayerKinematicBody2D p))
         {
@@ -26,17 +41,7 @@ public class Mine : Area2D
 
             // TODO: if NumberOfBulletsGenerated is high (like 25), noticeable lag when mine explodes
 
-            for (double i = 0; i < 360; i += (360.0 / this.NumberOfBulletsGenerated))
-            {
-                BulletRigidBody2D bullet = (BulletRigidBody2D)bulletScene.Instance();
-                this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(bullet);
-                bullet.GlobalPosition = this.GlobalPosition;
-                bullet.GlobalRotation = (float)i;
-                bullet.Speed = (float)GD.RandRange(400, 800);
-                bullet.MaxDistance = this.BlastRadius;
-                bullet.Go();
-            }
-
+            this.SpawnBullet();  // Explode, then free.
             this.QueueFree();
         }
     }

@@ -4,8 +4,7 @@ using System;
 public class BulletRigidBody2D : RigidBody2D
 {
     [Export] public float Speed = 800;
-    [Export] public float Size = 10;
-    [Export] public float Life = 1;
+    [Export] public float Life = 1;             // how long (in seconds) the bullet lives (before it is deleted)
     [Export] public float Damage = 10;
     [Export] public float MaxDistance = 500;
 

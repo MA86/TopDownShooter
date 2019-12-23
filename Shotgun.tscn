@@ -6,7 +6,8 @@
 [ext_resource path="res://topdown-shooter/PNG/weapon_machine.png" type="Texture" id=4]
 
 [node name="Sprite" instance=ExtResource( 1 )]
-position = Vector2( 19.8014, 12.1847 )
+position = Vector2( 2.72121, 9.80142 )
+offset = Vector2( -2, -1 )
 Icon = ExtResource( 2 )
 ClipSize = 10
 RateOfFire = 60.0
@@ -17,12 +18,12 @@ NumBulletsPerShot = 6
 StaggerDistance = 50.0
 
 [node name="Position2D" parent="." index="0"]
-position = Vector2( 10.2531, -3.05849 )
+position = Vector2( 33.0034, -0.575423 )
 
 [node name="BulletSound" parent="." index="1"]
 stream = ExtResource( 3 )
 attenuation = 0.0507658
 
 [node name="Sprite" type="Sprite" parent="." index="3"]
-position = Vector2( 0.264801, -5.95819 )
+position = Vector2( 15.0941, -4.22909 )
 texture = ExtResource( 4 )

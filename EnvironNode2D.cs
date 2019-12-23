@@ -23,8 +23,6 @@ public class EnvironNode2D : Node2D
         PlayerBag.Connect("CellClicked", this, "OnCellClicked");
 
         // Setup crosshair on the mouse icon.
-        Texture mouseImage = GD.Load<Texture>("res://kenney_topdowntanksredux/PNG/Retina/barricadeMetal.png");
-        Input.SetCustomMouseCursor(mouseImage, Input.CursorShape.Cross);
         Input.SetDefaultCursorShape(Input.CursorShape.Cross);
     }
 

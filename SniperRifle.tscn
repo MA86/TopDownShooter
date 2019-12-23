@@ -4,7 +4,7 @@
 [ext_resource path="res://topdown-shooter/sniper_rifle_icon.PNG" type="Texture" id=2]
 
 [node name="Sprite" instance=ExtResource( 1 )]
-position = Vector2( 30.9234, 8.21255 )
+position = Vector2( 4.31012, 10.1986 )
 scale = Vector2( 2.28239, 0.601394 )
 Icon = ExtResource( 2 )
 ClipSize = 5

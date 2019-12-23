@@ -80,6 +80,34 @@ public class PlayerKinematicBody2D : KinematicBody2D
                 GetTree().SetInputAsHandled();
                 return;
             }
+
+            // wheel
+            if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp || mouseEvent.ButtonIndex == (int)ButtonList.WheelDown))
+            {
+                Camera2D camera = this.GetNode<Camera2D>("/root/EnvironNode2D/OnGround/PlayerKinematicBody2D/Camera2D");
+                float currentXZoom = camera.Zoom.x;
+                float currentYZoom = camera.Zoom.y;
+                float AMOUNT = 0.10f;
+
+                float ZOOM_MAX_IN = 0.5f;
+                float ZOOM_MAX_OUT = 2;
+
+                // wheel up
+                if (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp)
+                    camera.Zoom = new Vector2(currentXZoom - currentXZoom * AMOUNT, currentYZoom - currentYZoom * AMOUNT);
+                // wheel down
+                if (mouseEvent.ButtonIndex == (int)ButtonList.WheelDown)
+                    camera.Zoom = new Vector2(currentXZoom + currentXZoom * AMOUNT, currentYZoom + currentYZoom * AMOUNT);
+
+                // cap zoom
+                if (camera.Zoom.x < ZOOM_MAX_IN)
+                    camera.Zoom = new Vector2(ZOOM_MAX_IN, ZOOM_MAX_IN);
+                if (camera.Zoom.x > ZOOM_MAX_OUT)
+                    camera.Zoom = new Vector2(ZOOM_MAX_OUT, ZOOM_MAX_OUT);
+
+                GetTree().SetInputAsHandled();
+                return;
+            }
         }
     }
 

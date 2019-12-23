@@ -7,8 +7,9 @@
 [ext_resource path="res://topdown-shooter/PNG/weapon_gun.png" type="Texture" id=5]
 
 [node name="Sprite" instance=ExtResource( 1 )]
-position = Vector2( 24.568, 6.62369 )
+position = Vector2( -0.853645, 8.60975 )
 scale = Vector2( 1.5, 0.561672 )
+offset = Vector2( 15, -5 )
 Icon = ExtResource( 2 )
 ClipSize = 200
 ReloadTime = 6.0
@@ -18,25 +19,25 @@ CurrentRounds = 200
 Range = 700
 
 [node name="Position2D" parent="." index="0"]
-position = Vector2( 14.2997, 6.57545 )
+position = Vector2( 36.4459, 10.111 )
 
 [node name="ReloadSound" parent="." index="2"]
 stream = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="." index="3"]
-position = Vector2( 2.50175, 4.96516 )
+position = Vector2( 18.1255, 2.84357 )
 texture = ExtResource( 4 )
 
 [node name="Sprite4" type="Sprite" parent="." index="4"]
-position = Vector2( 0.667187, 15.6886 )
-rotation = 0.296919
+position = Vector2( 17.9736, 17.6429 )
+rotation = 0.217252
 texture = ExtResource( 4 )
 
 [node name="Sprite2" type="Sprite" parent="." index="5"]
-position = Vector2( 0.127767, 12.156 )
+position = Vector2( 15.7515, 10.0344 )
 texture = ExtResource( 4 )
 
 [node name="Sprite3" type="Sprite" parent="." index="6"]
-position = Vector2( -7.28687, 5.08397 )
+position = Vector2( 8.33685, 2.96238 )
 scale = Vector2( 0.916377, 2.13152 )
 texture = ExtResource( 5 )

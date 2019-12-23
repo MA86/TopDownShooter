@@ -1,20 +1,18 @@
 # Todo
-- corner
 - chainsaw
-- make health pickupable (use when clicked on)
+- add "ray" bullet system (doens't use physics, uses rays)
 
-- Sound/Animation/Polish
-	- DONE gun shot/reload sound
+- basic zombie ai
+	- make zombies "slide" around obsticles
+	- zombies destroy doors/sandbags
+
+- Sound/Animation/Polish	
 	- better gun icons
 	- better inventory background (and cell background)
 	- background music
-	- inventory click sound
-	- DONE change mouse to cross hair.
-	- make zoom user adjustable.
-	- add vibration to the gun.
+	- inventory click sound	
 	- placeable barrel
 		- can be shot to explode
-	- etc
 
 - unstable mine (contineously generates lots of bullets in 90 degree arg)
 	- player can funnel by building "barrel" around it (just two long thin walls)
@@ -39,3 +37,10 @@
 - DONE shotgun
 - DONE gun icons
 - DONE make inventory arbitrarely big
+- DONE corner gun
+- DONE gun shot/reload sound
+- DONE change mouse to cross hair.
+- DONE generalize bullet to be bounceable
+- DONE make gun rotate instead of bullet (for kickback)
+- DONE add vibration to the gun.
+- DONE make zoom user adjustable (mouse wheel?)	
