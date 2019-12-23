@@ -14,12 +14,14 @@ public class PlayerKinematicBody2D : KinematicBody2D
     // Called when this player enters the scene.
     public override void _Ready()
     {
-        // NOT used.
+        // not used
     }
 
     // Equip weapon.
     public void EquipGun(Gun gun)
     {
+        this.GetNode<AnimatedSprite>("AnimatedSprite").Animation = "hand";
+
         this.RemoveChild(this.gun);
         this.gun = gun as GenericGun;
         this.AddChild(this.gun);

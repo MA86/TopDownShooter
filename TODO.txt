@@ -1,18 +1,21 @@
 # Todo
 - chainsaw
 - add "ray" bullet system (doens't use physics, uses rays)
-
 - basic zombie ai
 	- make zombies "slide" around obsticles
 	- zombies destroy doors/sandbags
+- moveable barrel
+	- player can pick barrels up, move, and set em down
+- moveable mine
+	- same concept as moveable barrel
+- moveable sandbag
+
 
 - Sound/Animation/Polish	
 	- better gun icons
 	- better inventory background (and cell background)
 	- background music
 	- inventory click sound	
-	- placeable barrel
-		- can be shot to explode
 
 - unstable mine (contineously generates lots of bullets in 90 degree arg)
 	- player can funnel by building "barrel" around it (just two long thin walls)
@@ -44,3 +47,4 @@
 - DONE make gun rotate instead of bullet (for kickback)
 - DONE add vibration to the gun.
 - DONE make zoom user adjustable (mouse wheel?)	
+- DONE shootable barrel
