@@ -6,7 +6,7 @@ public class EnvironNode2D : Node2D
 {
     // Fields
     public List<ZombieKinematicBody2D> Zombies = new List<ZombieKinematicBody2D>();
-    public PlayerKinematicBody2D Player;  // This reference is set by the players blueprint
+    public PlayerKinematicBody2D Player;
     public Inventory PlayerBag;
 
 

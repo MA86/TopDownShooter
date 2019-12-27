@@ -8,6 +8,8 @@ public class PlayerKinematicBody2D : KinematicBody2D
     [Export] public float Health = 10;
     [Export] public float DamageCaused = 0;
 
+    public Barrel Barrel = null;
+
     Vector2 movementVector;
     GenericGun gun;
 
@@ -25,6 +27,18 @@ public class PlayerKinematicBody2D : KinematicBody2D
         this.RemoveChild(this.gun);
         this.gun = gun as GenericGun;
         this.AddChild(this.gun);
+    }
+
+    public override void _Process(float delta)
+    {
+        // Press space to drop barrel.
+        if (Input.IsActionJustPressed("space") && this.Barrel != null)
+        {
+            this.RemoveChild(this.Barrel);
+            this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(this.Barrel);
+            this.Barrel.GlobalPosition = this.GlobalPosition;
+            this.Barrel = null;
+        }
     }
 
     // Called every frame.

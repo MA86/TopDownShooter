@@ -4,8 +4,8 @@
 - basic zombie ai
 	- make zombies "slide" around obsticles
 	- zombies destroy doors/sandbags
-- moveable barrel
-	- player can pick barrels up, move, and set em down
+- DONE moveable barrel
+	- DONE player can pick barrels up, move, and set em down
 - moveable mine
 	- same concept as moveable barrel
 - moveable sandbag
