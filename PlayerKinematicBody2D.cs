@@ -4,14 +4,15 @@ using System;
 public class PlayerKinematicBody2D : KinematicBody2D
 {
     // Modify player attributes.
-    [Export] public float MoveSpeed = 120;
+    [Export] public float MoveSpeed = 120;          // In pixels per second
     [Export] public float Health = 10;
     [Export] public float DamageCaused = 0;
 
-    public Barrel Barrel = null;
+    public Barrel Barrel = null;                    // The barrel that the Player is currently holding
+    public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted)
+    public bool Mounted = false;                    // Whether the player is currently mounted or not
 
-    Vector2 movementVector;
-    GenericGun gun;
+    private GenericGun gun;
 
     // Called when this player enters the scene.
     public override void _Ready()
@@ -31,6 +32,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
 
     public override void _Process(float delta)
     {
+        // TODO refactor, move this to unhandled input and change it to e not space
         // Press space to drop barrel.
         if (Input.IsActionJustPressed("space") && this.Barrel != null)
         {
@@ -48,9 +50,18 @@ public class PlayerKinematicBody2D : KinematicBody2D
         Vector2 mousePos = this.GetNode<Camera2D>("Camera2D").GetGlobalMousePosition();
         this.LookAt(mousePos);
 
+        // If we are mounted, restrict angle
+        if (this.Mounted)
+        {
+            float amount = Mathf.Deg2Rad(this.MountableRegion.Arc / 2.0f);
+            if (this.Rotation > this.MountableRegion.Rotation + amount)
+                this.Rotation = this.MountableRegion.Rotation + amount;
+            if (this.Rotation < this.MountableRegion.Rotation - amount)
+                this.Rotation = this.MountableRegion.Rotation - amount;
+        }
+
         // Based on the arrow key input, move.
-        CalculateMovementVector(delta);     // TODO refactor (have CalculateMovementVector return the new vector)
-        KinematicCollision2D collisionInfo = this.MoveAndCollide(movementVector, false);
+        KinematicCollision2D collisionInfo = this.MoveAndCollide(GetMovementVector(delta), false);
         if (collisionInfo != null)
         {
             // What to do when collided with a gun crate.
@@ -125,15 +136,44 @@ public class PlayerKinematicBody2D : KinematicBody2D
                 return;
             }
         }
+
+        if (@event is InputEventKey asKeyEvent)
+        {
+            // e pressed event
+            if ((asKeyEvent.Pressed) && (asKeyEvent.Scancode == (int)KeyList.E))
+            {
+                // mount
+                if (!Mounted && (MountableRegion != null))
+                {
+                    this.Mounted = true;
+                    this.Position = MountableRegion.Position;
+                    this.Rotation = MountableRegion.Rotation;
+                    this.MoveSpeed = 0;
+                    if (this.gun != null)
+                        this.gun.Mounted = true;
+                    GetTree().SetInputAsHandled();
+                    return;
+                }
+
+                // unmount
+                if (Mounted)
+                {
+                    this.Mounted = false;
+                    this.MoveSpeed = 120;
+                    if (this.gun != null)
+                        this.gun.Mounted = false;
+                    GetTree().SetInputAsHandled();
+                    return;
+                }
+            }
+        }
     }
 
-    // Calculates a movement vector from arrow keys.
-    public void CalculateMovementVector(float delta)
+    // Calculate a movement vector based on which arrow keys are pressed and how much time since last frame.
+    public Vector2 GetMovementVector(float delta)
     {
-        // By how much to move.
-        movementVector = new Vector2();
+        Vector2 movementVector = new Vector2();
 
-        // Handle the arrow keys pressed.
         if (Input.IsActionPressed("ui_up"))
         {
             movementVector += new Vector2(0, -1);
@@ -151,8 +191,9 @@ public class PlayerKinematicBody2D : KinematicBody2D
             movementVector += new Vector2(1, 0);
         }
 
-        // Normalize the movement.
+        // scale by speed 
         movementVector = movementVector.Normalized() * delta * MoveSpeed;
+        return movementVector;
     }
 
     // Called to apply damage to the player.

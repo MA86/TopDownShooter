@@ -4,18 +4,17 @@
 - basic zombie ai
 	- make zombies "slide" around obsticles
 	- zombies destroy doors/sandbags
-- DONE moveable barrel
-	- DONE player can pick barrels up, move, and set em down
 - moveable mine
-	- same concept as moveable barrel
 - moveable sandbag
 
-
 - Sound/Animation/Polish	
-	- better gun icons
-	- better inventory background (and cell background)
-	- background music
-	- inventory click sound	
+	- better graphics
+		- guns, UI, character, props, terrain, whether, etc
+	- better sound
+		- gun sounds
+		- walk sound
+		- whether sound
+		- music tracks
 
 - unstable mine (contineously generates lots of bullets in 90 degree arg)
 	- player can funnel by building "barrel" around it (just two long thin walls)
@@ -48,3 +47,4 @@
 - DONE add vibration to the gun.
 - DONE make zoom user adjustable (mouse wheel?)	
 - DONE shootable barrel
+- DONE moveable barrel

@@ -6,9 +6,11 @@ public class GenericGun : Gun
     // Fields
     [Export] public int ClipSize = 30;
     [Export] public float ReloadTime = 2;
-    [Export] public float RateOfFire = 1000;   // Per minute
-    [Export] public float Theta = 4;            // Arch of fire when gun is at it's most accurate
-    [Export] public float MaxTheta = 10;        // Arch of fire when gun is at it's most inaccurate
+    [Export] public float RateOfFire = 1000;        // Per minute
+    [Export] public float UnmountedTheta = 2;       // Arch of fire when gun is at its most accurate (when unmounted)
+    [Export] public float UnmountedMaxTheta = 5;    // Arch of fire when gun is at its most inaccurate (when unmounted)
+    [Export] public float MountedTheta = 2;         // Arch of fire when gun is at its most accurate (when mounted)
+    [Export] public float MountedMaxTheta = 5;      // Arch of fire when gun is at its most inaccurate (when mounted)
     [Export] public int CurrentRounds = 30; 
     [Export] public int Range = 500;            // how far bullets travel
     [Export] bool Auto = true;                  // Auto (true) or SemiAuto (false)
@@ -17,6 +19,7 @@ public class GenericGun : Gun
     [Export] float StaggerDistance = 0;         // When bullets are spanwed, how much random forward movement they get (again, shotgun like effect)  
     [Export] PackedScene BulletUsed;
 
+    private bool mounted = false;                // whether the gun is mountd or not (will fire more accurately if mounted)
     private Timer bulletTimer;
     private Timer reloadTimer;
     private Timer canShootTimer;
@@ -24,12 +27,39 @@ public class GenericGun : Gun
     private float lastBulletTime = 0;
     private bool canShoot = true;
     private bool shooting = false;
-    private float immediateTheta;
+    float theta = 4;                            // Arch of fire when gun is at it's most accurate (meaning well rested shooter)
+    float maxTheta = 10;                        // Arch of fire when gun is at it's most inaccurate (rambo shooter)
+    private float immediateTheta;               // At this exact moment, the arch of fire (arch that a bullet can spawn in) (gets bigger as you shoot more, and smaller as you rest)
+
+    // Getter/Setter for Mounted property
+    public bool Mounted
+    {
+        get
+        {
+            return this.mounted;
+        }
+
+        set
+        {
+            this.mounted = value;
+
+            if (this.mounted)
+            {
+                this.theta = this.MountedTheta;
+                this.maxTheta = this.MountedTheta;
+            }
+            else
+            {
+                this.theta = this.UnmountedTheta;
+                this.maxTheta = this.UnmountedMaxTheta;
+            }
+        }
+    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        this.immediateTheta = this.Theta;
+        this.immediateTheta = this.theta;
 
         // by default, use this bullet
         if (BulletUsed == null)
@@ -64,15 +94,17 @@ public class GenericGun : Gun
         reloadTimer.OneShot = true;
     }
 
+    // Called periodically to slowly make the gun more accurate over time.
     void OnMakeAccurate()
     {
+        // don't make the gun accurate if we are still shooting (timer still executes this function when we are shooting - was just easier to implement it that way)
         if (this.shooting)
             return;
 
-        if (this.immediateTheta > this.Theta)
-            this.immediateTheta = this.immediateTheta / 2.0f;
-        if (this.immediateTheta < this.Theta)
-            this.immediateTheta = this.Theta;
+        if (this.immediateTheta > this.theta)
+            this.immediateTheta = this.immediateTheta / 2.0f; // half the inaccuracy
+        if (this.immediateTheta < this.theta) 
+            this.immediateTheta = this.theta;
         this.Rotation = 0;
     }
 
@@ -99,19 +131,18 @@ public class GenericGun : Gun
     // Spawns a bullet.
     private void FireBullet()
     {
-        // If it's not yet time to fire, then don't.
+        // If it's not yet time to fire, then don't (prevents client from calling FireBullet repeatedly to surpass gun's fire rate)
         float timeNeeded = 1.0f / RateOfFire * 60.0f * 1000.0f;
         if (OS.GetTicksMsec() - this.lastBulletTime < timeNeeded)
             return;
 
         // Create a bullet and position it on the gun.
-
         for (int i = 0; i < this.NumBulletsPerShot; i++)
         {
             BulletRigidBody2D bullet = (BulletRigidBody2D)this.BulletUsed.Instance();
             this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(bullet);
             this.Rotation = 0;
-            this.Rotation += (float)GD.RandRange(Mathf.Deg2Rad(-this.immediateTheta), Mathf.Deg2Rad(this.immediateTheta));
+            this.Rotation += (float)GD.RandRange(Mathf.Deg2Rad(-this.immediateTheta), Mathf.Deg2Rad(this.immediateTheta)); // jitter gun ("recoil")
             bullet.Rotation = this.GlobalRotation;
             bullet.Position = this.GlobalPosition;
             bullet.Position = this.GetNode<Position2D>("Position2D").GlobalPosition;
@@ -126,9 +157,9 @@ public class GenericGun : Gun
         this.GetNode<AudioStreamPlayer2D>("BulletSound").Play();
 
         this.lastBulletTime = OS.GetTicksMsec();
-        this.immediateTheta += 2.0f;
-        if (this.immediateTheta > this.MaxTheta)
-            this.immediateTheta = this.MaxTheta;
+        this.immediateTheta += 2.0f; // add to recoil
+        if (this.immediateTheta > this.maxTheta)
+            this.immediateTheta = this.maxTheta;
     }
 
 

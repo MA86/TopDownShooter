@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://EnvironNode2D.cs" type="Script" id=1]
 [ext_resource path="res://Inventory.tscn" type="PackedScene" id=2]
@@ -16,7 +16,8 @@
 [ext_resource path="res://HealthKit.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Mine.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Barrel.tscn" type="PackedScene" id=16]
-[ext_resource path="res://sounds/health_sound.wav" type="AudioStream" id=17]
+[ext_resource path="res://MountableRegion.tscn" type="PackedScene" id=17]
+[ext_resource path="res://sounds/health_sound.wav" type="AudioStream" id=18]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -728,7 +729,15 @@ position = Vector2( 180.251, 167.646 )
 [node name="Barrel2" parent="OnGround" instance=ExtResource( 16 )]
 position = Vector2( 613.022, 142.183 )
 
+[node name="MountableRegion" parent="OnGround" instance=ExtResource( 17 )]
+position = Vector2( 137.588, 399.52 )
+
+[node name="MountableRegion2" parent="OnGround" instance=ExtResource( 17 )]
+position = Vector2( 149.044, 504.054 )
+rotation = -1.63073
+Arc = 15.0
+
 [node name="Sky" type="Node2D" parent="."]
 
 [node name="HealthRegenSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 17 )
+stream = ExtResource( 18 )
