@@ -3,13 +3,11 @@ using System;
 
 public class PlayerKinematicBody2D : KinematicBody2D
 {
-    // Modify player attributes.
     [Export] public float MoveSpeed = 120;          // In pixels per second
     [Export] public float Health = 10;
-    [Export] public float DamageCaused = 0;
 
     public Barrel Barrel = null;                    // The barrel that the Player is currently holding
-    public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted)
+    public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted yet)
     public bool Mounted = false;                    // Whether the player is currently mounted or not
 
     private GenericGun gun;
