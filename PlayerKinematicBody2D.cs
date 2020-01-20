@@ -6,6 +6,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
     [Export] public float MoveSpeed = 120;          // In pixels per second
     [Export] public float Health = 10;
 
+    public Barrel OverBarrel = null;                // The barrel that the player is currently over
     public Barrel Barrel = null;                    // The barrel that the Player is currently holding (if null, he isn't holding a barrel)
     public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted yet)
     public bool Mounted = false;                    // Whether the player is currently mounted or not
@@ -129,6 +130,17 @@ public class PlayerKinematicBody2D : KinematicBody2D
             // e pressed event
             if ((asKeyEvent.Pressed) && (asKeyEvent.Scancode == (int)KeyList.E))
             {
+                // if over barrel, pick it up
+                if (this.OverBarrel != null && this.Barrel == null)
+                {
+                    this.Barrel = this.OverBarrel;
+                    this.Barrel.Position = new Vector2(0, 0); // place barrel at (0,0) relative to the player
+                    this.Barrel.GetParent().RemoveChild(this.Barrel); // remove barrel from its current parent
+                    this.AddChild(this.Barrel); // add it as a child to player
+                    this.GetTree().SetInputAsHandled();
+                    return;
+                }
+
                 // if holding barrel, drop it
                 if (this.Barrel != null)
                 {

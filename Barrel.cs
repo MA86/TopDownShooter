@@ -3,7 +3,6 @@ using System;
 
 public class Barrel : Mine
 {
-    private bool collidingWithPlayer = false;
     private PlayerKinematicBody2D player;
 
     public override void _Ready()
@@ -14,15 +13,7 @@ public class Barrel : Mine
 
     public override void _Process(float delta)
     {
-        var player = this.GetNode<EnvironNode2D>("/root/EnvironNode2D").Player;
-        if (Input.IsActionJustPressed("pickup") && this.collidingWithPlayer && player.Barrel == null)
-        {
-            // Pick up barrel
-            this.Position = new Vector2(0, 0);
-            this.GetParent().RemoveChild(this);
-            player.AddChild(this);
-            player.Barrel = this;
-        }
+        this.player = this.GetNode<EnvironNode2D>("/root/EnvironNode2D").Player; // TODO figure out a way not to do this - very inefficient (can't put it in ready due to order of ready call)
     }
 
     // Called when someone shoots the barrel.
@@ -36,8 +27,7 @@ public class Barrel : Mine
 
         if (body is PlayerKinematicBody2D player)
         {
-            this.collidingWithPlayer = true;
-
+            player.OverBarrel = this;
         }
     }
 
@@ -45,7 +35,7 @@ public class Barrel : Mine
     {
         if (body is PlayerKinematicBody2D player)
         {
-            this.collidingWithPlayer = false;
+            player.OverBarrel = null;
         }
     }
 }
