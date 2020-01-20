@@ -48,3 +48,4 @@
 - DONE make zoom user adjustable (mouse wheel?)	
 - DONE shootable barrel
 - DONE moveable barrel
+- DONE guns are mountable

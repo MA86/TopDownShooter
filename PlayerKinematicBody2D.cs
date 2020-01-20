@@ -6,7 +6,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
     [Export] public float MoveSpeed = 120;          // In pixels per second
     [Export] public float Health = 10;
 
-    public Barrel Barrel = null;                    // The barrel that the Player is currently holding
+    public Barrel Barrel = null;                    // The barrel that the Player is currently holding (if null, he isn't holding a barrel)
     public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted yet)
     public bool Mounted = false;                    // Whether the player is currently mounted or not
 
@@ -26,19 +26,6 @@ public class PlayerKinematicBody2D : KinematicBody2D
         this.RemoveChild(this.gun);
         this.gun = gun as GenericGun;
         this.AddChild(this.gun);
-    }
-
-    public override void _Process(float delta)
-    {
-        // TODO refactor, move this to unhandled input and change it to e not space
-        // Press space to drop barrel.
-        if (Input.IsActionJustPressed("space") && this.Barrel != null)
-        {
-            this.RemoveChild(this.Barrel);
-            this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(this.Barrel);
-            this.Barrel.GlobalPosition = this.GlobalPosition;
-            this.Barrel = null;
-        }
     }
 
     // Called every frame.
@@ -79,12 +66,13 @@ public class PlayerKinematicBody2D : KinematicBody2D
         }
     }
 
-    // ['Priority' event handling... Because mouse has dual use.]
+    // This method is called when there is an input event (mouse/keyboard/joystick etc) that hasn't been handled yet.
     public override void _UnhandledInput(InputEvent @event)
     {
+        // mouse event
         if (@event is InputEventMouseButton mouseEvent)
         {
-            // pressed
+            // left mouse button pressed - pull gun trigger
             if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
             {
                 if(this.gun == null)
@@ -95,7 +83,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
                 return;
             }
 
-            // released
+            // left mouse button released - release gun trigger
             if ((!mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
             {
                 if (this.gun == null)
@@ -106,7 +94,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
                 return;
             }
 
-            // wheel
+            // mouse wheel - zoom in/out
             if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp || mouseEvent.ButtonIndex == (int)ButtonList.WheelDown))
             {
                 Camera2D camera = this.GetNode<Camera2D>("/root/EnvironNode2D/OnGround/PlayerKinematicBody2D/Camera2D");
@@ -135,12 +123,24 @@ public class PlayerKinematicBody2D : KinematicBody2D
             }
         }
 
+        // key event
         if (@event is InputEventKey asKeyEvent)
         {
             // e pressed event
             if ((asKeyEvent.Pressed) && (asKeyEvent.Scancode == (int)KeyList.E))
             {
-                // mount
+                // if holding barrel, drop it
+                if (this.Barrel != null)
+                {
+                    this.RemoveChild(this.Barrel);
+                    this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(this.Barrel);
+                    this.Barrel.Position = this.Position;
+                    this.Barrel = null;
+                    this.GetTree().SetInputAsHandled();
+                    return;
+                }
+
+                // if in mountable region, mount
                 if (!Mounted && (MountableRegion != null))
                 {
                     this.Mounted = true;
@@ -153,7 +153,7 @@ public class PlayerKinematicBody2D : KinematicBody2D
                     return;
                 }
 
-                // unmount
+                // if mounted, unmount
                 if (Mounted)
                 {
                     this.Mounted = false;
