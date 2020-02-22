@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/GenericGun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets_2/sniper_rifle_icon.PNG" type="Texture" id=2]
+
+[node name="Sprite" instance=ExtResource( 1 )]
+position = Vector2( 4.31012, 10.1986 )
+scale = Vector2( 2.28239, 0.601394 )
+Icon = ExtResource( 2 )
+ClipSize = 5
+RateOfFire = 60.0
+UnmountedTheta = 0.0
+UnmountedMaxTheta = 0.0
+MountedTheta = 0.0
+MountedMaxTheta = 0.0
+CurrentRounds = 5
+Range = 3000
+Auto = false
+BulletSpeed = 1500.0

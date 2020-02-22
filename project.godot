@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="TopDownShooterGame"
-run/main_scene="res://EnvironNode2D.tscn"
+run/main_scene="res://scenes/EnvironNode2D.tscn"
 config/icon="res://icon.png"
 
 [input]

@@ -49,20 +49,22 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Barrel.cs" />
-    <Compile Include="BulletRigidBody2D.cs" />
-    <Compile Include="CellGui.cs" />
-    <Compile Include="EnvironNode2D.cs" />
-    <Compile Include="Gun.cs" />
-    <Compile Include="GunCrate.cs" />
-    <Compile Include="HealthKit.cs" />
-    <Compile Include="Inventory.cs" />
-    <Compile Include="GenericGun.cs" />
-    <Compile Include="Mine.cs" />
-    <Compile Include="MountableRegion.cs" />
-    <Compile Include="PlayerKinematicBody2D.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ZombieKinematicBody2D.cs" />
+    <Compile Include="scenes\FX.cs" />
+    <Compile Include="scripts/Barrel.cs" />
+    <Compile Include="scripts/BulletRigidBody2D.cs" />
+    <Compile Include="scripts/CellGui.cs" />
+    <Compile Include="scripts/EnvironNode2D.cs" />
+    <Compile Include="scripts/Gun.cs" />
+    <Compile Include="scripts/GunCrate.cs" />
+    <Compile Include="scripts/HealthKit.cs" />
+    <Compile Include="scripts/Inventory.cs" />
+    <Compile Include="scripts/GenericGun.cs" />
+    <Compile Include="scripts/Mine.cs" />
+    <Compile Include="scripts/MountableRegion.cs" />
+    <Compile Include="scripts/PlayerKinematicBody2D.cs" />
+    <Compile Include="Properties/AssemblyInfo.cs" />
+    <Compile Include="scripts/ZombieKinematicBody2D.cs" />
+    <Compile Include="scripts\FXs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

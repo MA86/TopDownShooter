@@ -1,0 +1,34 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://scripts/FXs.cs" type="Script" id=1]
+[ext_resource path="res://assets_2/mine_explosion/tile000.png" type="Texture" id=2]
+[ext_resource path="res://assets_2/mine_explosion/tile001.png" type="Texture" id=3]
+[ext_resource path="res://assets_2/mine_explosion/tile002.png" type="Texture" id=4]
+[ext_resource path="res://assets_2/mine_explosion/tile003.png" type="Texture" id=5]
+[ext_resource path="res://assets_2/mine_explosion/tile004.png" type="Texture" id=6]
+[ext_resource path="res://assets_2/mine_explosion/tile005.png" type="Texture" id=7]
+[ext_resource path="res://assets_2/mine_explosion/tile006.png" type="Texture" id=8]
+[ext_resource path="res://assets_2/mine_explosion/tile007.png" type="Texture" id=9]
+[ext_resource path="res://assets_2/mine_explosion/tile008.png" type="Texture" id=10]
+[ext_resource path="res://assets_2/mine_explosion/tile009.png" type="Texture" id=11]
+[ext_resource path="res://assets_2/mine_explosion/tile010.png" type="Texture" id=12]
+[ext_resource path="res://assets_2/mine_explosion/tile011.png" type="Texture" id=13]
+[ext_resource path="res://sounds/explosion09.wav" type="AudioStream" id=14]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ null, ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), null ],
+"loop": false,
+"name": "mine_explosion",
+"speed": 15.0
+} ]
+
+[node name="FX" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Animations" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "mine_explosion"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )

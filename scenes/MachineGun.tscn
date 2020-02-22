@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/GenericGun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets_2/PNG/Free-Sci-Fi-Items-icons-weapons/PNG/13.png" type="Texture" id=2]
+
+[node name="Sprite" instance=ExtResource( 1 )]
+Icon = ExtResource( 2 )
+MountedTheta = 1.0
+MountedMaxTheta = 2.0
+Range = 900
+BulletSpeed = 1400.0

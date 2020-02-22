@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scripts/PlayerKinematicBody2D.cs" type="Script" id=1]
+[ext_resource path="res://assets_2/player_no_hand.png" type="Texture" id=2]
+[ext_resource path="res://assets_2/player_hand.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 14.3542
+height = 4.9371
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "reload",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "no_hand",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "hand",
+"speed": 0.0
+} ]
+
+[node name="PlayerKinematicBody" type="KinematicBody2D"]
+script = ExtResource( 1 )
+MoveSpeed = 150.0
+Health = 100.0
+
+[node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -10, 0 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -0.513351, -1.02669 )
+frames = SubResource( 2 )
+animation = "hand"

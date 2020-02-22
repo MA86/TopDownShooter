@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets_2/PNG/weapon_machine.png" type="Texture" id=1]
+[ext_resource path="res://scripts/GenericGun.cs" type="Script" id=2]
+[ext_resource path="res://assets_2/machine_gun_icon.PNG" type="Texture" id=3]
+[ext_resource path="res://sounds/bullet.wav" type="AudioStream" id=4]
+[ext_resource path="res://sounds/mgun_reload.wav" type="AudioStream" id=5]
+
+[node name="Sprite" type="Sprite"]
+position = Vector2( 4.90592, 9.20557 )
+scale = Vector2( 1.5, 0.8 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -2, -5 )
+script = ExtResource( 2 )
+Icon = ExtResource( 3 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 34.9548, -0.496531 )
+
+[node name="BulletSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="ReloadSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )

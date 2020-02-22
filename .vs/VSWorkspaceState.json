@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\scripts"
   ],
-  "SelectedNode": "\\CellGui.cs",
+  "SelectedNode": "\\scripts\\Barrel.cs",
   "PreviewInSolutionExplorer": false
 }

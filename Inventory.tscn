@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://Inventory.cs" type="Script" id=1]
-
-[node name="Panel" type="Panel"]
-margin_right = 204.0
-margin_bottom = 64.0
-script = ExtResource( 1 )
