@@ -9,25 +9,25 @@ using System;
 /// </summary>
 public class FXs : Node2D
 {
-    AnimatedSprite animations;      // Used to reference animations in FX scene.
-    AudioStreamPlayer2D sound;      // Used to reference audio in FX scene.
+	AnimatedSprite animations;      // Used to reference animations in FX scene.
+	AudioStreamPlayer2D sound;      // Used to reference audio in FX scene.
 
-    // When FX enters the scene tree.
-    public override void _Ready()
-    {
-        // Get a reference to AnimatedSprite inside FX scene.
-        animations = this.GetNode<AnimatedSprite>("Animations");
+	// When FX enters the scene tree.
+	public override void _Ready()
+	{
+		// Get a reference to AnimatedSprite inside FX scene.
+		animations = this.GetNode<AnimatedSprite>("Animations");
 
-        // Get a reference to AudioStreamPlayer2D inside FX scene.
-        sound = this.GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
-    }
+		// Get a reference to AudioStreamPlayer2D inside FX scene.
+		sound = this.GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+	}
 
-    // Mine explosion and sound.
-    public void PlayMineExplosionAnimAndSound(Vector2 position)
-    {
-        animations.Position = position;
-        sound.Play();
-        animations.Play("mine_explosion");
-        animations.SetFrame(0);
-    }
+	// Mine explosion and sound.
+	public void PlayMineExplosionAnimAndSound(Vector2 position)
+	{
+		animations.Position = position;
+		sound.Play();
+		animations.Play("mine_explosion");
+		animations.SetFrame(0);
+	}
 }

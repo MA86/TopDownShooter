@@ -3,259 +3,259 @@ using System;
 
 public class PlayerKinematicBody2D : KinematicBody2D
 {
-    [Export] public float MoveSpeed = 120;          // In pixels per second
-    [Export] public float Health = 10;
+	[Export] public float MoveSpeed = 120;          // In pixels per second
+	[Export] public float Health = 10;
 
-    public Barrel OverBarrel = null;                // The barrel that the player is currently over
-    public Barrel Barrel = null;                    // The barrel that the Player is currently holding (if null, he isn't holding a barrel)
-    public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted yet)
-    public bool Mounted = false;                    // Whether the player is currently mounted or not
+	public Barrel OverBarrel = null;                // The barrel that the player is currently over
+	public Barrel Barrel = null;                    // The barrel that the Player is currently holding (if null, he isn't holding a barrel)
+	public MountableRegion MountableRegion = null;  // The mountable region that the player is currently over (doesn't mean he is mounted yet)
+	public bool Mounted = false;                    // Whether the player is currently mounted or not
 
-    private GenericGun gun;
+	private GenericGun gun;
 
-    // Your map limits.
-    float minLimitX = -1100f;
-    float maxLimitX = 2150f;
-    float minLimitY = -315f;
-    float maxLimitY = 1650f;
+	// Your map limits.
+	float minLimitX = -1100f;
+	float maxLimitX = 2150f;
+	float minLimitY = -315f;
+	float maxLimitY = 1650f;
 
-    Vector2 pos = new Vector2();    // Player's position within the bounds of the map.
+	Vector2 pos = new Vector2();    // Player's position within the bounds of the map.
 
-    // Called when this player enters the scene.
-    public override void _Ready()
-    {
-        // not used
-    }
+	// Called when this player enters the scene.
+	public override void _Ready()
+	{
+		// not used
+	}
 
-    // Equip weapon.
-    public void EquipGun(Gun gun)
-    {
-        this.GetNode<AnimatedSprite>("AnimatedSprite").Animation = "hand";
+	// Equip weapon.
+	public void EquipGun(Gun gun)
+	{
+		this.GetNode<AnimatedSprite>("AnimatedSprite").Animation = "hand";
 
-        this.RemoveChild(this.gun);
-        this.gun = gun as GenericGun;
-        this.AddChild(this.gun);
-    }
+		this.RemoveChild(this.gun);
+		this.gun = gun as GenericGun;
+		this.AddChild(this.gun);
+	}
 
-    // Called every frame.
-    public override void _PhysicsProcess(float delta)
-    {
-        // Always look at the position of the mouse.
-        Vector2 mousePos = this.GetNode<Camera2D>("Camera2D").GetGlobalMousePosition();
-        this.LookAt(mousePos);
+	// Called every frame.
+	public override void _PhysicsProcess(float delta)
+	{
+		// Always look at the position of the mouse.
+		Vector2 mousePos = this.GetNode<Camera2D>("Camera2D").GetGlobalMousePosition();
+		this.LookAt(mousePos);
 
-        // If we are mounted, restrict angle
-        if (this.Mounted)
-        {
-            float amount = Mathf.Deg2Rad(this.MountableRegion.Arc / 2.0f);
-            if (this.Rotation > this.MountableRegion.Rotation + amount)
-                this.Rotation = this.MountableRegion.Rotation + amount;
-            if (this.Rotation < this.MountableRegion.Rotation - amount)
-                this.Rotation = this.MountableRegion.Rotation - amount;
-        }
+		// If we are mounted, restrict angle
+		if (this.Mounted)
+		{
+			float amount = Mathf.Deg2Rad(this.MountableRegion.Arc / 2.0f);
+			if (this.Rotation > this.MountableRegion.Rotation + amount)
+				this.Rotation = this.MountableRegion.Rotation + amount;
+			if (this.Rotation < this.MountableRegion.Rotation - amount)
+				this.Rotation = this.MountableRegion.Rotation - amount;
+		}
 
-        // Player cannot move outside the map. We deal with that below.
+		// Player cannot move outside the map. We deal with that below.
 
-        // Ensure the player's position is within the bounds of the map.
-        pos.x = Mathf.Clamp(this.Position.x, minLimitX, maxLimitX);
-        pos.y = Mathf.Clamp(this.Position.y, minLimitY, maxLimitY);
-        this.SetPosition(pos);      
+		// Ensure the player's position is within the bounds of the map.
+		pos.x = Mathf.Clamp(this.Position.x, minLimitX, maxLimitX);
+		pos.y = Mathf.Clamp(this.Position.y, minLimitY, maxLimitY);
+		this.SetPosition(pos);      
 
-        // What to do when player collided.
-        KinematicCollision2D collisionInfo = this.MoveAndCollide(this.GetMovementVector(delta), false);
-        if (collisionInfo != null)
-        {
-            // What to do when collided with a gun crate.
-            if (collisionInfo.Collider is GunCrate crate)
-            {
-                // Add the gun in the inventory.
-                Inventory inventory = this.GetNode<Inventory>("/root/EnvironNode2D/CanvasLayer/Inventory");
-                inventory.AddGun(crate.Gun);
-                crate.QueueFree();
-            }
-        }
+		// What to do when player collided.
+		KinematicCollision2D collisionInfo = this.MoveAndCollide(this.GetMovementVector(delta), false);
+		if (collisionInfo != null)
+		{
+			// What to do when collided with a gun crate.
+			if (collisionInfo.Collider is GunCrate crate)
+			{
+				// Add the gun in the inventory.
+				Inventory inventory = this.GetNode<Inventory>("/root/EnvironNode2D/CanvasLayer/Inventory");
+				inventory.AddGun(crate.Gun);
+				crate.QueueFree();
+			}
+		}
 
-        // Reload gun.
-        if (Input.IsKeyPressed((int)KeyList.R))
-        {
-            gun.Reload();
-        }
-    }
+		// Reload gun.
+		if (Input.IsKeyPressed((int)KeyList.R))
+		{
+			gun.Reload();
+		}
+	}
 
 
-    // This method is called when there is an input event (mouse/keyboard/joystick etc) that hasn't been handled yet.
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        // mouse event
-        if (@event is InputEventMouseButton mouseEvent)
-        {
-            // left mouse button pressed - pull gun trigger
-            if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
-            {
-                if(this.gun == null)
-                    return;
-                
-                this.gun.PullTrigger();
-                GetTree().SetInputAsHandled();
-                return;
-            }
+	// This method is called when there is an input event (mouse/keyboard/joystick etc) that hasn't been handled yet.
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		// mouse event
+		if (@event is InputEventMouseButton mouseEvent)
+		{
+			// left mouse button pressed - pull gun trigger
+			if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
+			{
+				if(this.gun == null)
+					return;
+				
+				this.gun.PullTrigger();
+				GetTree().SetInputAsHandled();
+				return;
+			}
 
-            // left mouse button released - release gun trigger
-            if ((!mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
-            {
-                if (this.gun == null)
-                    return;
+			// left mouse button released - release gun trigger
+			if ((!mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.Left))
+			{
+				if (this.gun == null)
+					return;
 
-                this.gun.ReleaseTrigger();
-                GetTree().SetInputAsHandled();
-                return;
-            }
+				this.gun.ReleaseTrigger();
+				GetTree().SetInputAsHandled();
+				return;
+			}
 
-            // mouse wheel - zoom in/out
-            if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp || mouseEvent.ButtonIndex == (int)ButtonList.WheelDown))
-            {
-                Camera2D camera = this.GetNode<Camera2D>("/root/EnvironNode2D/OnGround/PlayerKinematicBody2D/Camera2D");
-                float currentXZoom = camera.Zoom.x;
-                float currentYZoom = camera.Zoom.y;
-                float AMOUNT = 0.10f;
+			// mouse wheel - zoom in/out
+			if ((mouseEvent.Pressed) && (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp || mouseEvent.ButtonIndex == (int)ButtonList.WheelDown))
+			{
+				Camera2D camera = this.GetNode<Camera2D>("/root/EnvironNode2D/OnGround/PlayerKinematicBody2D/Camera2D");
+				float currentXZoom = camera.Zoom.x;
+				float currentYZoom = camera.Zoom.y;
+				float AMOUNT = 0.10f;
 
-                float ZOOM_MAX_IN = 0.5f;
-                float ZOOM_MAX_OUT = 2;
+				float ZOOM_MAX_IN = 0.5f;
+				float ZOOM_MAX_OUT = 2;
 
-                // wheel up
-                if (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp)
-                    camera.Zoom = new Vector2(currentXZoom - currentXZoom * AMOUNT, currentYZoom - currentYZoom * AMOUNT);
-                // wheel down
-                if (mouseEvent.ButtonIndex == (int)ButtonList.WheelDown)
-                    camera.Zoom = new Vector2(currentXZoom + currentXZoom * AMOUNT, currentYZoom + currentYZoom * AMOUNT);
+				// wheel up
+				if (mouseEvent.ButtonIndex == (int)ButtonList.WheelUp)
+					camera.Zoom = new Vector2(currentXZoom - currentXZoom * AMOUNT, currentYZoom - currentYZoom * AMOUNT);
+				// wheel down
+				if (mouseEvent.ButtonIndex == (int)ButtonList.WheelDown)
+					camera.Zoom = new Vector2(currentXZoom + currentXZoom * AMOUNT, currentYZoom + currentYZoom * AMOUNT);
 
-                // cap zoom
-                if (camera.Zoom.x < ZOOM_MAX_IN)
-                    camera.Zoom = new Vector2(ZOOM_MAX_IN, ZOOM_MAX_IN);
-                if (camera.Zoom.x > ZOOM_MAX_OUT)
-                    camera.Zoom = new Vector2(ZOOM_MAX_OUT, ZOOM_MAX_OUT);
+				// cap zoom
+				if (camera.Zoom.x < ZOOM_MAX_IN)
+					camera.Zoom = new Vector2(ZOOM_MAX_IN, ZOOM_MAX_IN);
+				if (camera.Zoom.x > ZOOM_MAX_OUT)
+					camera.Zoom = new Vector2(ZOOM_MAX_OUT, ZOOM_MAX_OUT);
 
-                GetTree().SetInputAsHandled();
-                return;
-            }
-        }
+				GetTree().SetInputAsHandled();
+				return;
+			}
+		}
 
-        // key event
-        if (@event is InputEventKey asKeyEvent)
-        {
-            // e pressed event
-            if ((asKeyEvent.Pressed) && (asKeyEvent.Scancode == (int)KeyList.E))
-            {
-                
-                
-                // if over barrel, pick it up
-                if (this.OverBarrel != null && this.Barrel == null)
-                {
-                    this.OverBarrel.GetNode<CollisionShape2D>("StaticBody2D/CollisionShape2D").Disabled = true;
+		// key event
+		if (@event is InputEventKey asKeyEvent)
+		{
+			// e pressed event
+			if ((asKeyEvent.Pressed) && (asKeyEvent.Scancode == (int)KeyList.E))
+			{
+				
+				
+				// if over barrel, pick it up
+				if (this.OverBarrel != null && this.Barrel == null)
+				{
+					this.OverBarrel.GetNode<CollisionShape2D>("StaticBody2D/CollisionShape2D").Disabled = true;
 
-                    this.Barrel = this.OverBarrel;
-                    this.Barrel.Position = new Vector2(20, 0); // place barrel at (0,0) relative to the player
-                    this.Barrel.GetParent().RemoveChild(this.Barrel); // remove barrel from its current parent
-                    this.AddChild(this.Barrel); // add it as a child to player
-                    this.GetTree().SetInputAsHandled();
-                    return;
-                }
+					this.Barrel = this.OverBarrel;
+					this.Barrel.Position = new Vector2(20, 0); // place barrel at (0,0) relative to the player
+					this.Barrel.GetParent().RemoveChild(this.Barrel); // remove barrel from its current parent
+					this.AddChild(this.Barrel); // add it as a child to player
+					this.GetTree().SetInputAsHandled();
+					return;
+				}
 
-                // if holding barrel, drop it
-                if (this.Barrel != null)
-                {
-                    this.OverBarrel.GetNode<CollisionShape2D>("StaticBody2D/CollisionShape2D").Disabled = false;
+				// if holding barrel, drop it
+				if (this.Barrel != null)
+				{
+					this.OverBarrel.GetNode<CollisionShape2D>("StaticBody2D/CollisionShape2D").Disabled = false;
 
-                    this.RemoveChild(this.Barrel);
-                    this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(this.Barrel);
-                    this.Barrel.Position = this.Position;
-                    this.Barrel = null;
-                    this.GetTree().SetInputAsHandled();
-                    return;
-                }
+					this.RemoveChild(this.Barrel);
+					this.GetNode<Node2D>("/root/EnvironNode2D/OnGround").AddChild(this.Barrel);
+					this.Barrel.Position = this.Position;
+					this.Barrel = null;
+					this.GetTree().SetInputAsHandled();
+					return;
+				}
 
-                // if in mountable region, mount
-                if (!Mounted && (MountableRegion != null))
-                {
-                    this.Mounted = true;
-                    this.Position = MountableRegion.Position;
-                    this.Rotation = MountableRegion.Rotation;
-                    this.MoveSpeed = 0;
-                    if (this.gun != null)
-                        this.gun.Mounted = true;
-                    GetTree().SetInputAsHandled();
-                    return;
-                }
+				// if in mountable region, mount
+				if (!Mounted && (MountableRegion != null))
+				{
+					this.Mounted = true;
+					this.Position = MountableRegion.Position;
+					this.Rotation = MountableRegion.Rotation;
+					this.MoveSpeed = 0;
+					if (this.gun != null)
+						this.gun.Mounted = true;
+					GetTree().SetInputAsHandled();
+					return;
+				}
 
-                // if mounted, unmount
-                if (Mounted)
-                {
-                    this.Mounted = false;
-                    this.MoveSpeed = 120;
-                    if (this.gun != null)
-                        this.gun.Mounted = false;
-                    GetTree().SetInputAsHandled();
-                    return;
-                }
-            }
-        }
-    }
+				// if mounted, unmount
+				if (Mounted)
+				{
+					this.Mounted = false;
+					this.MoveSpeed = 120;
+					if (this.gun != null)
+						this.gun.Mounted = false;
+					GetTree().SetInputAsHandled();
+					return;
+				}
+			}
+		}
+	}
 
-    // Calculate a movement vector based on which arrow keys are pressed and how much time since last frame.
-    // Also restrict player movement to within the map limits
-    public Vector2 GetMovementVector(float delta)
-    {
-        Vector2 movementVector = new Vector2();
+	// Calculate a movement vector based on which arrow keys are pressed and how much time since last frame.
+	// Also restrict player movement to within the map limits
+	public Vector2 GetMovementVector(float delta)
+	{
+		Vector2 movementVector = new Vector2();
 
-        if (Input.IsKeyPressed((int)KeyList.W))
-        {
-            movementVector += new Vector2(0, -1);
-        }
-        if (Input.IsKeyPressed((int)KeyList.S))
-        {
-            movementVector += new Vector2(0, 1);
-        }
-        if (Input.IsKeyPressed((int)KeyList.A))
-        {
-            movementVector += new Vector2(-1, 0);
-        }
-        if (Input.IsKeyPressed((int)KeyList.D))
-        {
-            movementVector += new Vector2(1, 0);
-        }
+		if (Input.IsKeyPressed((int)KeyList.W))
+		{
+			movementVector += new Vector2(0, -1);
+		}
+		if (Input.IsKeyPressed((int)KeyList.S))
+		{
+			movementVector += new Vector2(0, 1);
+		}
+		if (Input.IsKeyPressed((int)KeyList.A))
+		{
+			movementVector += new Vector2(-1, 0);
+		}
+		if (Input.IsKeyPressed((int)KeyList.D))
+		{
+			movementVector += new Vector2(1, 0);
+		}
 
-        // scale by speed 
-        movementVector = movementVector.Normalized() * delta * MoveSpeed;
+		// scale by speed 
+		movementVector = movementVector.Normalized() * delta * MoveSpeed;
 
-        return movementVector;
-    }
+		return movementVector;
+	}
 
-    // Called to apply damage to the player.
-    public void ApplyDamage(float damageAmount)
-    {
-        this.Health -= damageAmount;
+	// Called to apply damage to the player.
+	public void ApplyDamage(float damageAmount)
+	{
+		this.Health -= damageAmount;
 
-        if (this.Health <= 0)
-        {
-            EnvironNode2D env = this.GetParent<EnvironNode2D>();
+		if (this.Health <= 0)
+		{
+			EnvironNode2D env = this.GetParent<EnvironNode2D>();
 
-            // Before dying, clear all references.
-            foreach (ZombieKinematicBody2D zombie in env.Zombies)
-            {
-                if (zombie.TargetNode == this)
-                {
-                    zombie.TargetNode = null;
-                }
-            }
+			// Before dying, clear all references.
+			foreach (ZombieKinematicBody2D zombie in env.Zombies)
+			{
+				if (zombie.TargetNode == this)
+				{
+					zombie.TargetNode = null;
+				}
+			}
 
-            this.QueueFree();
-        }
-    }
+			this.QueueFree();
+		}
+	}
 
-    public void AddToHealth(int health)
-    {
-        this.Health += health;
-        if (this.Health > 10)
-            this.Health = 10;
-    }
+	public void AddToHealth(int health)
+	{
+		this.Health += health;
+		if (this.Health > 10)
+			this.Health = 10;
+	}
 }
