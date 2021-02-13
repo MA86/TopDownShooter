@@ -1,3 +1,8 @@
-Created a 2D zombie game using Godot framework. It's a prototype.
+# Zombie Shooter Game:
+Created a top-down 2D zombie game using Godot framework. It's a prototype.
 
-[Here](https://vimeo.com/392856546) is a short video demonstration.
+# Technologies Used:
+C#, Godot, and Godot Editor.
+
+# Demonstration:
+[Here](https://vimeo.com/392856546) is a short video demonstration of this game in action.
