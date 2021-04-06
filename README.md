@@ -6,3 +6,5 @@ C#, Godot, and Godot Editor.
 
 # Demonstration:
 [Here](https://vimeo.com/392856546) is a short video demonstration of this game in action.
+
+To check out the source code, look inside **scripts** folder.
